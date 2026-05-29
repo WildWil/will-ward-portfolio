@@ -34,3 +34,9 @@ WillWEBSITEDESIGN.html
 WillWEBSITEDESIGN_files/
 Will Ward IT - Google Search.html
 Will Ward IT - Google Search_files/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example

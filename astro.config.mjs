@@ -5,6 +5,8 @@ import react from '@astrojs/react';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://will-ward.com',
   compressHTML: true,
@@ -18,4 +20,6 @@ export default defineConfig({
       },
     },
   },
+
+  adapter: cloudflare(),
 });
