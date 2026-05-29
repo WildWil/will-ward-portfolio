@@ -259,9 +259,17 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
       gap: 2.5rem;
     }
     .browser-frame { max-width: 360px; }
-    /* On mobile the work image sits at the bottom of the hero, so the scroll
-       cue would overlap it. Hide it — phones scroll naturally. */
-    .scroll-cue { display: none; }
+    /* Mobile: natural height and let the scroll cue flow in below the work
+       image (centered) instead of floating absolutely over it. */
+    .hero {
+      min-height: auto;
+      display: block;
+    }
+    .scroll-cue {
+      position: static;
+      bottom: auto;
+      margin: 1.75rem auto 0;
+    }
   }
 
   @media (max-width: 480px) {
