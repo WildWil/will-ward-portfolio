@@ -353,6 +353,20 @@ const tiers = [
       });
     });
 
+    // On mobile, start centered on the "Most popular" plan.
+    const startCarousel = () => {
+      // Only when the grid is actually a horizontal carousel (mobile).
+      if (grid.scrollWidth <= grid.clientWidth + 4) return;
+      let featured = cards.findIndex((c) => c.classList.contains('price-card--featured'));
+      if (featured < 0) featured = 0;
+      const c = cards[featured];
+      // Set scrollLeft directly (no smooth) so it's already there on load,
+      // without scrolling the page to the section.
+      grid.scrollLeft = c.offsetLeft + c.offsetWidth / 2 - grid.clientWidth / 2;
+      sync();
+    };
+
+    requestAnimationFrame(startCarousel);
     sync();
   }
 </script>
