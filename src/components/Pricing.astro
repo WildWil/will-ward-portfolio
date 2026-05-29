@@ -63,6 +63,12 @@ const tiers = [
       ))}
     </div>
 
+    <div class="pricing-dots" id="pricing-dots">
+      {tiers.map((_, i) => (
+        <button class="pricing-dot" type="button" data-i={i} aria-label={`Go to plan ${i + 1}`}></button>
+      ))}
+    </div>
+
     <div class="care-plan">
       <div class="care-left">
         <span class="care-title">Care Plan</span>
@@ -257,28 +263,56 @@ const tiers = [
   }
 
   @media (max-width: 860px) {
-    /* Horizontal swipe carousel: plans side by side, snap as you swipe */
+    /* Full-bleed centered swipe carousel: each plan snaps to center with a
+       peek of the neighbours on both sides. */
     .pricing-grid {
       display: flex;
       max-width: none;
-      gap: 1rem;
+      margin-inline: calc(var(--px) * -1);   /* break out of container padding */
+      padding-inline: 9%;                     /* leading/trailing so first & last center */
+      gap: 0.875rem;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding-top: 0.875rem;      /* room for the "Most popular" badge */
-      padding-bottom: 1rem;
-      scroll-padding-inline: var(--px);
+      scroll-padding-inline: 9%;
+      padding-top: 0.875rem;                  /* room for the "Most popular" badge */
+      padding-bottom: 0.5rem;
       scrollbar-width: none;
     }
     .pricing-grid::-webkit-scrollbar { display: none; }
     .price-card {
-      flex: 0 0 80%;
-      scroll-snap-align: start;
+      flex: 0 0 82%;
+      scroll-snap-align: center;
     }
     .price-card--featured { transform: none; }
     .price-card--featured:hover { transform: translateY(-2px); }
     .care-plan { flex-direction: column; align-items: flex-start; }
     .care-right { text-align: left; }
+  }
+
+  /* Carousel dots (mobile only) */
+  .pricing-dots { display: none; }
+  @media (max-width: 860px) {
+    .pricing-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .pricing-dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: var(--site-border);
+      cursor: pointer;
+      transition: background 200ms, width 200ms;
+    }
+    .pricing-dot[data-active] {
+      background: var(--site-accent);
+      width: 22px;
+    }
   }
   @media (max-width: 520px) {
     .pricing-header { margin-bottom: 2rem; }
@@ -288,3 +322,37 @@ const tiers = [
     .care-plan { padding: 1.25rem; }
   }
 </style>
+
+<script>
+  const grid = document.getElementById('services')?.querySelector('.pricing-grid') as HTMLElement | null;
+  const dotsWrap = document.getElementById('pricing-dots');
+  if (grid && dotsWrap) {
+    const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('.pricing-dot'));
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.price-card'));
+
+    const sync = () => {
+      const mid = grid.scrollLeft + grid.clientWidth / 2;
+      let best = 0, bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const center = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(center - mid);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      dots.forEach((d, i) => d.toggleAttribute('data-active', i === best));
+    };
+
+    let raf = 0;
+    grid.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(sync);
+    }, { passive: true });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+    });
+
+    sync();
+  }
+</script>
