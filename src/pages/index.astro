@@ -40,4 +40,10 @@ import Footer from '../components/Footer.astro';
     transition: top 150ms;
   }
   .skip-link:focus { top: 0; }
+  /* In dark mode --site-fg is near-white, so the default white text would be
+     invisible — pin the skip link to the accent instead. */
+  :global(.dark) .skip-link {
+    background: var(--site-accent);
+    color: var(--primary-foreground);
+  }
 </style>
