@@ -93,7 +93,10 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
   .scroll-cue {
     position: absolute;
     bottom: 1.25rem;
-    left: 50%;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: fit-content;
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -111,8 +114,8 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
     text-transform: uppercase;
   }
   @keyframes scroll-bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%      { transform: translateX(-50%) translateY(6px); }
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
   }
   @media (prefers-reduced-motion: reduce) {
     .scroll-cue { animation: none; }
@@ -255,12 +258,26 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
       grid-template-columns: 1fr;
       gap: 2.5rem;
     }
-    .hero-visual { order: -1; }
     .browser-frame { max-width: 360px; }
   }
 
   @media (max-width: 480px) {
     .hero-heading { font-size: 2.25rem; }
     .browser-frame { max-width: 100%; }
+    /* Keep the three stats on one centered row */
+    .hero-stats {
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .stat {
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      min-width: 0;
+    }
+    .stat-num { font-size: 0.875rem; }
+    .stat-label { font-size: 0.68rem; }
+    .stat-divider { height: 26px; }
   }
 </style>
