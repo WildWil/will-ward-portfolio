@@ -1,0 +1,22 @@
+# Will Ward IT
+
+> Custom web design and computer repair for local businesses and residents in Mount Pleasant, SC. Websites from $299, plus computer repair, hardware upgrades, virus removal, and remote IT support. Independently run since 2023.
+
+Will Ward is an independent web designer and computer technician based in Mount Pleasant, South Carolina, serving Mount Pleasant, Dunes West, Park West, and the greater Charleston area. Every website is custom-coded — no Wix, no templates — and clients own their domain, files, and logins with no lock-in. For IT work, customers get a straight diagnosis and a price before any work begins. Typical site turnaround is 3–7 days.
+
+## Services
+
+- [Website design](https://will-ward.com/index.md): Custom-coded business websites. Starter $299 (3 pages), Standard $549 (up to 5 pages, contact form, basic SEO), Custom $899+ (booking, online store, custom features). One revision included, 50% upfront.
+- [Computer repair & IT support](https://will-ward.com/index.md): Drop-off repair, remote screen-share support, and hardware upgrades (RAM, SSD). Virus removal, slow-performance and overheating fixes. Most repairs run $40–$120.
+- [Care Plan](https://will-ward.com/index.md): Optional $30/mo add-on covering domain, SSL, small content updates, and ongoing maintenance after launch.
+
+## Detail
+
+- [Full homepage content (Markdown)](https://will-ward.com/index.md): Complete services, pricing tiers, process, about, and customer reviews as clean Markdown.
+
+## Contact
+
+- Phone / text: [843-901-4691](tel:+18439014691)
+- Email: [tech@will-ward.com](mailto:tech@will-ward.com)
+- Reviews: [5-star Google reviews](https://share.google/nxhCQB9l7DoTD76EQ)
+- Service area: Mount Pleasant, Dunes West, Park West, and Charleston, SC

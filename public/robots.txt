@@ -1,0 +1,10 @@
+# robots.txt — will-ward.com
+# Everything is public and meant to be found.
+
+User-agent: *
+Allow: /
+
+# AI assistants and answer engines are welcome to read and cite this site
+# (e.g. GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended).
+
+Sitemap: https://will-ward.com/sitemap.xml
