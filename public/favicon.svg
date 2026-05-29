@@ -1,8 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <rect width="512" height="512" rx="116" fill="#0369A1" />
-  <g stroke="#ffffff" stroke-width="32" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="12">
-    <polyline points="162,160 96,256 162,352" />
-    <polyline points="200,160 232,352 256,268 280,352 312,160" />
-    <polyline points="350,160 416,256 350,352" />
-  </g>
+  <polyline points="118,150 190,374 256,244 322,374 394,150"
+    stroke="#ffffff" stroke-width="74" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="8" />
 </svg>
