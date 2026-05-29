@@ -1,0 +1,268 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── shadcn theme tokens (light) ── */
+:root {
+  color-scheme: light;
+
+  --background:            #F8FAFC;
+  --foreground:            #020617;
+  --card:                  #FFFFFF;
+  --card-foreground:       #020617;
+  --popover:               #FFFFFF;
+  --popover-foreground:    #020617;
+  --primary:               #0369A1;
+  --primary-foreground:    #FFFFFF;
+  --secondary:             #F1F5F9;
+  --secondary-foreground:  #0F172A;
+  --muted:                 #F1F5F9;
+  --muted-foreground:      #64748B;
+  --accent:                #EFF6FF;
+  --accent-foreground:     #0369A1;
+  --destructive:           #DC2626;
+  --destructive-foreground:#FFFFFF;
+  --border:                #E2E8F0;
+  --input:                 #E2E8F0;
+  --ring:                  #0369A1;
+
+  /* ── Site design tokens — bridged to shadcn so dark mode flows automatically ── */
+  --site-bg:          var(--background);
+  --site-surface:     var(--card);
+  --site-fg:          var(--foreground);
+  --site-border:      var(--border);
+  --site-accent:      var(--primary);
+  --site-accent-bg:   var(--accent);
+  /* Two-gray text + deep accent kept explicit (no clean shadcn equivalent) */
+  --site-secondary:   #475569;
+  --site-muted:       #94A3B8;
+  --site-accent-dark: #075985;
+
+  --font-heading: 'Archivo', sans-serif;
+  --font-body:    'Space Grotesk', sans-serif;
+
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+
+  --shadow-sm: 0 1px 3px rgba(2,6,23,.06), 0 1px 2px rgba(2,6,23,.04);
+  --shadow-md: 0 4px 12px rgba(2,6,23,.08), 0 2px 4px rgba(2,6,23,.04);
+  --shadow-lg: 0 8px 24px rgba(2,6,23,.10), 0 4px 8px rgba(2,6,23,.04);
+
+  --max-w: 1120px;
+  --px:    clamp(1.25rem, 5vw, 2.5rem);
+
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ── shadcn theme tokens (dark) ── */
+.dark {
+  color-scheme: dark;
+
+  --background:            #0B1120;
+  --foreground:            #E2E8F0;
+  --card:                  #111827;
+  --card-foreground:       #E2E8F0;
+  --popover:               #111827;
+  --popover-foreground:    #E2E8F0;
+  --primary:               #38BDF8;
+  --primary-foreground:    #0B1120;
+  --secondary:             #1E293B;
+  --secondary-foreground:  #E2E8F0;
+  --muted:                 #1E293B;
+  --muted-foreground:      #94A3B8;
+  --accent:                #15324B;
+  --accent-foreground:     #BAE6FD;
+  --destructive:           #EF4444;
+  --destructive-foreground:#0B1120;
+  --border:                #1E293B;
+  --input:                 #1E293B;
+  --ring:                  #38BDF8;
+
+  /* dark overrides for the explicit site tokens */
+  --site-secondary:   #CBD5E1;
+  --site-muted:       #64748B;
+  --site-accent-dark: #38BDF8;
+
+  /* shadows read softer on dark surfaces */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.5), 0 4px 8px rgba(0,0,0,.3);
+}
+
+/* ── Map tokens into Tailwind v4 so bg-background / text-primary / etc. generate ── */
+@theme inline {
+  --color-background:            var(--background);
+  --color-foreground:            var(--foreground);
+  --color-card:                  var(--card);
+  --color-card-foreground:       var(--card-foreground);
+  --color-popover:               var(--popover);
+  --color-popover-foreground:    var(--popover-foreground);
+  --color-primary:               var(--primary);
+  --color-primary-foreground:    var(--primary-foreground);
+  --color-secondary:             var(--secondary);
+  --color-secondary-foreground:  var(--secondary-foreground);
+  --color-muted:                 var(--muted);
+  --color-muted-foreground:      var(--muted-foreground);
+  --color-accent:                var(--accent);
+  --color-accent-foreground:     var(--accent-foreground);
+  --color-destructive:           var(--destructive);
+  --color-destructive-foreground:var(--destructive-foreground);
+  --color-border:                var(--border);
+  --color-input:                 var(--input);
+  --color-ring:                  var(--ring);
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--site-bg);
+  color: var(--site-fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--site-fg);
+}
+
+p {
+  color: var(--site-secondary);
+  max-width: 65ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Utilities ── */
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--px);
+}
+
+.section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.section-label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--site-accent);
+  margin-bottom: 0.75rem;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  font-size: 1.0625rem;
+  color: var(--site-secondary);
+  max-width: 52ch;
+  line-height: 1.7;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 200ms var(--ease-out);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--site-fg);
+  color: #fff;
+  border-color: var(--site-fg);
+}
+.btn-primary:hover {
+  background: #1e293b;
+  border-color: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.dark .btn-primary {
+  background: #0284C7;
+  color: #fff;
+  border-color: #0284C7;
+}
+.dark .btn-primary:hover {
+  background: #0EA5E9;
+  border-color: #0EA5E9;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--site-fg);
+  border-color: var(--site-border);
+}
+.btn-outline:hover {
+  border-color: var(--site-fg);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--site-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--site-border);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

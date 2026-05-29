@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Pricing from '../components/Pricing.astro';
+import ITServices from '../components/ITServices.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Process from '../components/Process.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <Pricing />
+    <ITServices />
+    <Testimonials />
+    <Process />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--site-fg);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: 200;
+    transition: top 150ms;
+  }
+  .skip-link:focus { top: 0; }
+</style>

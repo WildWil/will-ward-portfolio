@@ -1,0 +1,114 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Will Ward | Web Design & Computer Repair in Mount Pleasant, SC',
+  description = 'Will Ward builds custom websites for local businesses and fixes computers in Mount Pleasant, SC. Web design from $299, plus repair, upgrades, and remote IT help.',
+} = Astro.props;
+const site = Astro.site ?? 'https://will-ward.com';
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL('/work-plumbing.jpg', site);
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': new URL('/#business', site).href,
+  name: 'Will Ward IT',
+  alternateName: 'Will Ward',
+  description:
+    'Custom web design and computer repair for local businesses and residents in Mount Pleasant, SC. Websites from $299, plus repair, upgrades, and remote IT support.',
+  url: site.toString(),
+  telephone: '+1-843-901-4691',
+  email: 'tech@will-ward.com',
+  image: ogImage.href,
+  logo: new URL('/web-app-manifest-512x512.png', site).href,
+  priceRange: '$$',
+  foundingDate: '2023',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Mount Pleasant',
+    addressRegion: 'SC',
+    addressCountry: 'US',
+  },
+  areaServed: [
+    { '@type': 'Place', name: 'Mount Pleasant, SC' },
+    { '@type': 'Place', name: 'Dunes West, SC' },
+    { '@type': 'Place', name: 'Park West, SC' },
+    { '@type': 'Place', name: 'Charleston, SC' },
+  ],
+  knowsAbout: ['Web Design', 'Web Development', 'Computer Repair', 'Hardware Upgrades', 'Virus Removal', 'Remote IT Support'],
+  makesOffer: [
+    {
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: 'Website Design' },
+      priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'USD', price: '299', minPrice: '299' },
+    },
+    {
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: 'Computer Repair & IT Support' },
+    },
+  ],
+  sameAs: [
+    'https://www.linkedin.com/in/william-ward-8a24b33a4/',
+    'https://www.instagram.com/will.240sx/',
+    'https://github.com/WildWil',
+    'https://share.google/nxhCQB9l7DoTD76EQ',
+  ],
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+
+  <!-- Set theme before paint to avoid a flash of the wrong mode -->
+  <script is:inline>
+    (function () {
+      try {
+        // Default to light; only go dark if the visitor explicitly chose it.
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="canonical" href={canonical} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Will Ward" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0369A1" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={canonical} />
+  <meta property="og:image"       content={ogImage} />
+  <meta name="twitter:card"       content="summary_large_image" />
+
+  <!-- Fonts: preconnect for speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <title>{title}</title>
+
+  <!-- Local business structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

@@ -1,0 +1,133 @@
+---
+const services = [
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+    name: "Drop-off Repair",
+    desc: "Bring in your laptop or desktop and I'll diagnose and fix it. Virus removal, overheating, slow performance, hardware issues.",
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+    name: "Remote Support",
+    desc: "Screen share and I'll fix it without you leaving the house. Good for software problems, setup help, and anything that doesn't need a physical fix.",
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+    name: "Upgrades",
+    desc: "Add more RAM, swap to an SSD, or speed up an older machine. Most upgrades take an hour and make a noticeable difference.",
+  },
+];
+---
+<section class="section it-section" id="it-services">
+  <div class="container">
+    <div class="it-header">
+      <span class="section-label">IT Services</span>
+      <h2 class="section-heading">Computer repair in Mount Pleasant.</h2>
+      <p class="section-sub">
+        Drop your computer off, screen-share for remote help, or have me come to you.
+        I've covered Dunes West, Park West, and the rest of Mount Pleasant since 2023.
+      </p>
+    </div>
+    <div class="it-grid">
+      {services.map(s => (
+        <div class="it-card">
+          <div class="it-icon" set:html={s.icon} />
+          <h3 class="it-name">{s.name}</h3>
+          <p class="it-desc">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+    <div class="it-cta">
+      <p class="it-cta-text">Pricing varies by job. Most repairs are $40–$120.</p>
+      <div class="it-cta-actions">
+        <a href="tel:8439014691" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call or text
+        </a>
+        <a href="#contact" class="btn btn-outline">Send a message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .it-section {
+    background: var(--site-surface);
+    border-top: 1px solid var(--site-border);
+    border-bottom: 1px solid var(--site-border);
+  }
+  .it-header { margin-bottom: 2.5rem; }
+  .it-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .it-card {
+    background: var(--site-bg);
+    border: 1px solid var(--site-border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 200ms;
+  }
+  .it-card:hover { box-shadow: var(--shadow-md); }
+  .it-icon {
+    color: var(--site-accent);
+    width: 40px;
+    height: 40px;
+    background: var(--site-accent-bg);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .it-name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .it-desc {
+    font-size: 0.875rem;
+    color: var(--site-secondary);
+    line-height: 1.65;
+    max-width: 100%;
+  }
+  .it-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--site-bg);
+    border: 1px solid var(--site-border);
+    border-radius: var(--radius-lg);
+  }
+  .it-cta-text {
+    font-size: 0.9375rem;
+    color: var(--site-secondary);
+    max-width: 100%;
+  }
+  .it-cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 768px) {
+    .it-grid { grid-template-columns: 1fr; gap: 0.875rem; }
+    .it-cta { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 520px) {
+    .it-header { margin-bottom: 1.75rem; }
+    .it-card { padding: 1.375rem; gap: 0.5rem; }
+    .it-card .it-icon { width: 36px; height: 36px; }
+    .it-cta { padding: 1.25rem; }
+    .it-cta-actions { width: 100%; }
+    .it-cta-actions .btn { flex: 1; justify-content: center; }
+  }
+</style>

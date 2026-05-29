@@ -1,0 +1,166 @@
+---
+import { TestimonialsSection } from './TestimonialsSection';
+---
+<TestimonialsSection client:load />
+
+<style is:global>
+  .treviews {
+    padding-block: clamp(4rem, 8vw, 7rem);
+    background: var(--site-surface);
+    border-top: 1px solid var(--site-border);
+    border-bottom: 1px solid var(--site-border);
+  }
+  .treviews-inner {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: var(--px);
+  }
+
+  /* Header */
+  .treviews-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .treviews-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--site-accent);
+    margin-bottom: 0.75rem;
+  }
+  .treviews-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--site-fg);
+    margin-bottom: 0.75rem;
+  }
+  .treviews-sub {
+    font-size: 1rem;
+    color: var(--site-secondary);
+    max-width: 44ch;
+    line-height: 1.6;
+  }
+
+  /* Columns wrapper */
+  .treviews-cols {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-height: 620px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
+  }
+
+  /* A single scrolling column */
+  .tcol {
+    flex: 0 0 320px;
+    max-width: 320px;
+    overflow: hidden;
+  }
+  .tcol-track {
+    display: flex;
+    flex-direction: column;
+    /* No gap/padding here: each card carries its own margin so the
+       two duplicated sets loop seamlessly at translateY(-50%). */
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Card */
+  .tcard {
+    background: var(--site-bg);
+    border: 1px solid var(--site-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+  }
+  .tcard-stars {
+    color: #F59E0B;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+  }
+  .tcard-text {
+    color: var(--site-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 100%;
+    margin: 0;
+  }
+  .tcard-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .tcard-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .tcard-avatar-img {
+    object-fit: cover;
+    background: var(--site-border);
+  }
+  .tcard-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--site-fg);
+    line-height: 1.3;
+  }
+  .tcard-role {
+    font-size: 0.8125rem;
+    color: var(--site-muted);
+    line-height: 1.3;
+  }
+
+  /* Responsive: show 1 column on mobile, 2 on tablet, 3 on desktop */
+  .tcol-md { display: none; }
+  .tcol-lg { display: none; }
+  @media (min-width: 700px) {
+    .tcol-md { display: block; }
+  }
+  @media (min-width: 1000px) {
+    .tcol-lg { display: block; }
+  }
+
+  .treviews-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+
+  /* Mobile: single column fills the width, shorter viewport, tighter cards */
+  @media (max-width: 699px) {
+    .treviews-head { margin-bottom: 2rem; }
+    .treviews-cols {
+      max-height: 540px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+    }
+    .tcol { flex: 1 1 auto; max-width: 100%; }
+    .tcard { padding: 1.25rem; }
+    .tcard-text { font-size: 0.9375rem; }
+  }
+</style>

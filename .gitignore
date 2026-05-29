@@ -1,0 +1,36 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# editor
+.vscode/
+
+# scraped pages + working files (not part of the site)
+*.zip
+will-wardcom.html
+will-wardcom_files/
+WillWEBSITEDESIGN.html
+WillWEBSITEDESIGN_files/
+Will Ward IT - Google Search.html
+Will Ward IT - Google Search_files/

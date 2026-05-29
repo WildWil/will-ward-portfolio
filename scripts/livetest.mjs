@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const responses = [];
+page.on('response', r => { if (r.url().includes('web3forms')) responses.push(r.status()); });
+await page.goto('http://localhost:4321/#contact', { waitUntil: 'networkidle' });
+await page.fill('#name', 'Test Submission');
+await page.fill('#email', 'test@will-ward.com');
+await page.fill('#business', 'Setup Test');
+await page.fill('#message', 'Automated end-to-end test of the contact form. Safe to ignore/delete.');
+await page.click('.form-submit');
+await page.waitForTimeout(2500);
+const success = await page.isVisible('#form-success');
+const errText = (await page.textContent('#form-status'))?.trim();
+console.log('web3forms HTTP status:', responses.join(',') || 'none');
+console.log('success panel shown:', success);
+console.log('error text:', JSON.stringify(errText || ''));
+await browser.close();

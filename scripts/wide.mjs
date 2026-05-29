@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 2560, height: 1400 } });
+await page.goto('http://localhost:4321/#reviews', { waitUntil: 'networkidle' });
+await page.waitForTimeout(1500);
+const reviews = await page.$('#reviews');
+if (reviews) await reviews.scrollIntoViewIfNeeded();
+await page.waitForTimeout(800);
+await page.screenshot({ path: '/tmp/wide-reviews.png' });
+await browser.close();
+console.log('done');
