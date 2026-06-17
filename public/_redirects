@@ -1,0 +1,9 @@
+# Cloudflare static-asset redirects (served from dist/).
+# https://developers.cloudflare.com/workers/static-assets/redirects/
+
+# Legacy URLs from the previous multi-page site. Google still recrawls these
+# and reports them as 404 / "crawled - currently not indexed". 301 them to the
+# matching homepage section so the link signal consolidates onto the canonical.
+/home       /          301
+/businesses /#services 301
+/reviews    /#reviews  301

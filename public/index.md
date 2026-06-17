@@ -13,7 +13,7 @@ remote IT help. Independently run since 2023.
 
 ## Website Design — Simple pricing, no surprises
 
-Flat rates with one revision included and 50% upfront. You own everything when
+Flat rates and 50% upfront. You own everything when
 it's done — domain, files, and logins. No lock-in.
 
 ### Starter — $299 (one-time)
@@ -65,7 +65,7 @@ Simple and straightforward. Most projects are done within a week.
 1. **Tell me about your business** — We chat by text, call, or email about what
    you do, who your customers are, and what the site needs to accomplish.
 2. **I design and build it** — A custom design built from scratch, with a preview
-   link to review before anything goes live. One round of revisions included.
+   link to review before anything goes live.
 3. **Your site goes live** — Once you're happy, I launch it and hand over your
    domain, files, and login. No lock-in.
 

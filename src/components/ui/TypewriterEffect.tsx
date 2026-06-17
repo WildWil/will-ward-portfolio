@@ -63,34 +63,34 @@ export const TypewriterEffectSmooth = ({
   className?: string;
   cursorClassName?: string;
 }) => {
-  const wordsArray = words.map((word) => ({ ...word, text: word.text.split("") }));
-
   return (
-    <div className={cn("flex space-x-1 my-2", className)}>
-      <motion.div
-        className="overflow-hidden pb-2"
-        initial={{ width: "0%" }}
-        whileInView={{ width: "fit-content" }}
+    <div className={cn("my-2 text-base sm:text-lg md:text-xl font-semibold", className)}>
+      {/* inline-block lets the text wrap to the container width on narrow
+          screens (instead of one overflowing line that gets clipped by the
+          hero's overflow:hidden), while clip-path keeps the left-to-right
+          reveal without any layout shift. */}
+      <motion.span
+        className="inline-block max-w-full align-bottom"
+        initial={{ clipPath: "inset(0 100% 0 0)" }}
+        whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+        viewport={{ once: true }}
         transition={{ duration: 2, ease: "linear", delay: 0.5 }}
       >
-        <div className="text-base sm:text-lg md:text-xl font-semibold" style={{ whiteSpace: "nowrap" }}>
-          {wordsArray.map((word, idx) => (
-            <div key={`word-${idx}`} className="inline-block">
-              {word.text.map((char, index) => (
-                <span key={`char-${index}`} className={cn("text-foreground", word.className)}>
-                  {char}
-                </span>
-              ))}
-              &nbsp;
-            </div>
-          ))}
-        </div>
-      </motion.div>
+        {words.map((word, idx) => (
+          <span key={`word-${idx}`} className={cn("text-foreground", word.className)}>
+            {word.text}
+            {idx < words.length - 1 ? " " : ""}
+          </span>
+        ))}
+      </motion.span>
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-        className={cn("block rounded-sm w-[4px] h-6 sm:h-8 md:h-10 bg-primary mt-1", cursorClassName)}
+        className={cn(
+          "inline-block align-bottom ml-1 rounded-sm w-[4px] h-6 sm:h-8 md:h-10 bg-primary",
+          cursorClassName
+        )}
       />
     </div>
   );
