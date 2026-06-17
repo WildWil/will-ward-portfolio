@@ -9,7 +9,7 @@ const {
 } = Astro.props;
 const site = Astro.site ?? 'https://will-ward.com';
 const canonical = new URL(Astro.url.pathname, site);
-const ogImage = new URL('/work-plumbing.jpg', site);
+const ogImage = new URL('/PFP.jpg', site);
 
 const businessSchema = {
   '@context': 'https://schema.org',
@@ -95,7 +95,8 @@ const businessSchema = {
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content={canonical} />
   <meta property="og:image"       content={ogImage} />
-  <meta name="twitter:card"       content="summary_large_image" />
+  <meta property="og:image:alt"   content="Photo of Will Ward" />
+  <meta name="twitter:card"       content="summary" />
 
   <!-- Fonts: preconnect + load early (a <link> starts the request sooner than
        an @import buried in CSS, which is render-blocking and discovered late) -->
