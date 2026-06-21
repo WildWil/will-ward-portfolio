@@ -36,7 +36,13 @@ const tiers = [
       </p>
     </div>
 
-    <div class="pricing-grid">
+    <div class="pricing-carousel">
+      <button class="pricing-arrow pricing-arrow--prev" id="pricing-prev" type="button" aria-label="Previous plan">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="pricing-grid">
       {tiers.map(t => (
         <div class={`price-card ${t.featured ? 'price-card--featured' : ''}`}>
           {t.featured && <div class="price-badge">Most popular</div>}
@@ -61,6 +67,12 @@ const tiers = [
           </a>
         </div>
       ))}
+      </div>
+      <button class="pricing-arrow pricing-arrow--next" id="pricing-next" type="button" aria-label="Next plan">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
 
     <div class="pricing-dots" id="pricing-dots">
@@ -97,6 +109,7 @@ const tiers = [
   }
   .pricing-header .section-sub { text-align: center; }
 
+  .pricing-carousel { position: relative; }
   .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -105,6 +118,9 @@ const tiers = [
     max-width: 980px;
     margin-inline: auto;
   }
+
+  /* Prev/next arrows — only shown in carousel (mobile/tablet) mode */
+  .pricing-arrow { display: none; }
   .price-card {
     position: relative;
     background: var(--site-bg);
@@ -288,6 +304,35 @@ const tiers = [
     .price-card--featured:hover { transform: translateY(-2px); }
     .care-plan { flex-direction: column; align-items: flex-start; }
     .care-right { text-align: left; }
+
+    .pricing-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--site-border);
+      background: var(--site-bg);
+      color: var(--site-fg);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: background 150ms, color 150ms, opacity 150ms;
+    }
+    .pricing-arrow:hover { background: var(--site-surface); }
+    .pricing-arrow--prev { left: 0; }
+    .pricing-arrow--next { right: 0; }
+    .pricing-arrow[disabled] {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+  @media (max-width: 380px) {
+    .pricing-arrow { width: 34px; height: 34px; }
   }
 
   /* Carousel dots (mobile only) */
@@ -326,11 +371,13 @@ const tiers = [
 <script>
   const grid = document.getElementById('services')?.querySelector('.pricing-grid') as HTMLElement | null;
   const dotsWrap = document.getElementById('pricing-dots');
+  const prevBtn = document.getElementById('pricing-prev') as HTMLButtonElement | null;
+  const nextBtn = document.getElementById('pricing-next') as HTMLButtonElement | null;
   if (grid && dotsWrap) {
     const dots = Array.from(dotsWrap.querySelectorAll<HTMLButtonElement>('.pricing-dot'));
     const cards = Array.from(grid.querySelectorAll<HTMLElement>('.price-card'));
 
-    const sync = () => {
+    const currentIndex = () => {
       const mid = grid.scrollLeft + grid.clientWidth / 2;
       let best = 0, bestDist = Infinity;
       cards.forEach((c, i) => {
@@ -338,7 +385,21 @@ const tiers = [
         const d = Math.abs(center - mid);
         if (d < bestDist) { bestDist = d; best = i; }
       });
+      return best;
+    };
+
+    // Scroll only the carousel (never the page) to center the given card.
+    const goTo = (i: number) => {
+      const c = cards[Math.max(0, Math.min(cards.length - 1, i))];
+      const left = c.offsetLeft + c.offsetWidth / 2 - grid.clientWidth / 2;
+      grid.scrollTo({ left, behavior: 'smooth' });
+    };
+
+    const sync = () => {
+      const best = currentIndex();
       dots.forEach((d, i) => d.toggleAttribute('data-active', i === best));
+      if (prevBtn) prevBtn.disabled = best === 0;
+      if (nextBtn) nextBtn.disabled = best === cards.length - 1;
     };
 
     let raf = 0;
@@ -348,10 +409,10 @@ const tiers = [
     }, { passive: true });
 
     dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      });
+      dot.addEventListener('click', () => goTo(i));
     });
+    prevBtn?.addEventListener('click', () => goTo(currentIndex() - 1));
+    nextBtn?.addEventListener('click', () => goTo(currentIndex() + 1));
 
     // On mobile, start centered on the "Most popular" plan.
     const startCarousel = () => {
