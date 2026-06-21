@@ -14,32 +14,39 @@ const WEB3FORMS_KEY = "7a1f935d-9a7b-4395-9e28-acedf891e6df";
         No pressure, no sales pitch. Just a straight answer on what I can do for you.
       </p>
       <div class="contact-details">
-        <a href="tel:8439014691" class="contact-link">
+        <a href="tel:8439014691" class="contact-link" title="Call me">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.28-1.28a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           843-901-4691
         </a>
-        <a href="mailto:tech@will-ward.com" class="contact-link">
+        <a href="mailto:tech@will-ward.com" class="contact-link" title="Email me">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
             <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          tech@will-ward.com
+          <span class="contact-link-text">tech@will-ward.com</span>
         </a>
-        <a href="https://www.linkedin.com/in/william-ward-8a24b33a4/" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="https://www.linkedin.com/in/william-ward-8a24b33a4/" target="_blank" rel="noopener noreferrer" class="contact-link" title="Connect on LinkedIn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
           </svg>
           LinkedIn
         </a>
-        <a href="https://www.instagram.com/will.240sx/" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="https://www.instagram.com/will.240sx/" target="_blank" rel="noopener noreferrer" class="contact-link" title="Follow on Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.75"/>
             <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.75"/>
             <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
           </svg>
           Instagram
+        </a>
+        <a href="https://nextdoor.com/profile/01KfmYx2Xg9G9ywT4" target="_blank" rel="noopener noreferrer" class="contact-link" title="Find me on Nextdoor">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 11 12 3l9 8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 9.5V20h4v-5a3 3 0 016 0v5h4V9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Nextdoor
         </a>
       </div>
     </div>
@@ -224,6 +231,7 @@ const WEB3FORMS_KEY = "7a1f935d-9a7b-4395-9e28-acedf891e6df";
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
+    max-width: 100%;
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--site-secondary);
@@ -231,6 +239,10 @@ const WEB3FORMS_KEY = "7a1f935d-9a7b-4395-9e28-acedf891e6df";
   }
   .contact-link:hover { color: var(--site-fg); }
   .contact-link svg { flex-shrink: 0; }
+  .contact-link-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 
   /* ── Form ── */
   .contact-form {
