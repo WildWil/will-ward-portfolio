@@ -45,8 +45,8 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
         </div>
         <div class="browser-shot">
           <img
-            src="/work-plumbing.jpg"
-            alt="Bluewater Plumbing website, designed and built by Will Ward"
+            src="/tidewater-desktop.jpg"
+            alt="Tidewater Electric website, designed and built by Will Ward"
             width="1440"
             height="900"
             loading="eager"
@@ -55,12 +55,6 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
       </div>
     </div>
   </div>
-  <a href="#services" class="scroll-cue" aria-label="Scroll to services">
-    <span class="scroll-cue-text">Scroll</span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  </a>
 </section>
 
 <style>
@@ -87,38 +81,6 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
   }
   .hero-content {
     min-width: 0;
-  }
-
-  /* ── Scroll cue ── */
-  .scroll-cue {
-    position: absolute;
-    bottom: 1.25rem;
-    left: 0;
-    right: 0;
-    margin-inline: auto;
-    width: fit-content;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    color: var(--site-muted);
-    transition: color 150ms;
-    animation: scroll-bounce 2.2s ease-in-out infinite;
-  }
-  .scroll-cue:hover { color: var(--site-fg); }
-  .scroll-cue-text {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  @keyframes scroll-bounce {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(6px); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-cue { animation: none; }
   }
 
   /* ── Heading ── */
@@ -194,6 +156,9 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
     background: #F1F5F9;
     border-bottom: 1px solid var(--site-border);
   }
+  :global(.dark) .browser-bar {
+    background: #1E293B;
+  }
   .browser-dots {
     display: flex;
     gap: 5px;
@@ -232,16 +197,10 @@ import { InfiniteGrid } from './ui/InfiniteGrid';
       gap: 2.5rem;
     }
     .browser-frame { max-width: 360px; }
-    /* Mobile: natural height and let the scroll cue flow in below the work
-       image (centered) instead of floating absolutely over it. */
+    /* Mobile: natural height instead of filling the viewport. */
     .hero {
       min-height: auto;
       display: block;
-    }
-    .scroll-cue {
-      position: static;
-      bottom: auto;
-      margin: 1.75rem auto 0;
     }
   }
 

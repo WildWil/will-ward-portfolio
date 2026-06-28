@@ -81,34 +81,6 @@ export const InfiniteGrid = () => {
       >
         <GridPattern offsetX={offsetX} offsetY={offsetY} />
       </motion.div>
-
-      {/* Ambient glows (on-brand blues) */}
-      <div
-        style={{
-          position: "absolute",
-          right: "-15%",
-          top: "-25%",
-          width: "45%",
-          height: "55%",
-          borderRadius: "9999px",
-          background: "var(--primary)",
-          opacity: 0.16,
-          filter: "blur(120px)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: "-10%",
-          bottom: "-30%",
-          width: "40%",
-          height: "55%",
-          borderRadius: "9999px",
-          background: "var(--primary)",
-          opacity: 0.12,
-          filter: "blur(120px)",
-        }}
-      />
     </div>
   );
 };

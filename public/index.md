@@ -5,7 +5,7 @@ people in Mount Pleasant, SC. Web design from $299, plus repair, upgrades, and
 remote IT help. Independently run since 2023.
 
 - **Phone / text:** 843-901-4691
-- **Email:** tech@will-ward.com
+- **Email:** warwil533@gmail.com
 - **Service area:** Mount Pleasant, Dunes West, Park West, and Charleston, SC
 - **Site turnaround:** 3–7 days typical
 
@@ -111,5 +111,5 @@ See all reviews on Google: https://share.google/nxhCQB9l7DoTD76EQ
 Tell me what you're working on and I'll get back to you within a day.
 
 - **Phone / text:** 843-901-4691
-- **Email:** tech@will-ward.com
+- **Email:** warwil533@gmail.com
 - **Website:** https://will-ward.com
