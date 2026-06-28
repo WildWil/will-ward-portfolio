@@ -236,14 +236,24 @@ img, video {
 }
 
 .btn-outline {
-  background: transparent;
+  background: #E2E8F0;
   color: var(--site-fg);
-  border-color: var(--site-border);
+  border-color: #CBD5E1;
 }
 .btn-outline:hover {
-  border-color: var(--site-fg);
+  background: #CBD5E1;
+  border-color: #94A3B8;
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
+}
+.dark .btn-outline {
+  background: #1E293B;
+  color: var(--site-fg);
+  border-color: #334155;
+}
+.dark .btn-outline:hover {
+  background: #334155;
+  border-color: #475569;
 }
 
 /* ── Focus ── */

@@ -7,12 +7,6 @@ const year = new Date().getFullYear();
       <span class="footer-name">Will Ward</span>
       <span class="footer-location">Charleston, SC</span>
     </div>
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="#services">Web Design</a>
-      <a href="#it-services">IT Services</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#contact">Contact</a>
-    </nav>
     <div class="footer-right">
       <a href="mailto:warwil533@gmail.com" class="footer-link" aria-label="Email Will Ward" title="Email me">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -81,18 +75,6 @@ const year = new Date().getFullYear();
     font-size: 0.75rem;
     color: var(--site-muted);
   }
-  .footer-nav {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .footer-nav a {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--site-secondary);
-    transition: color 150ms;
-  }
-  .footer-nav a:hover { color: var(--site-fg); }
   .footer-right {
     display: flex;
     gap: 0.75rem;
@@ -118,9 +100,5 @@ const year = new Date().getFullYear();
   .footer-bottom span {
     font-size: 0.75rem;
     color: var(--site-muted);
-  }
-
-  @media (max-width: 560px) {
-    .footer-nav { display: none; }
   }
 </style>
