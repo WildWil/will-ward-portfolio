@@ -231,6 +231,18 @@ const tiers = [
     justify-content: center;
     margin-top: 0.5rem;
   }
+  /* Solid, high-contrast CTA on the light side cards so it doesn't blend
+     into the card background (the grey btn-outline did). */
+  .price-card:not(.price-card--featured) .price-cta {
+    background: var(--site-fg);
+    color: var(--site-bg);
+    border-color: var(--site-fg);
+  }
+  .price-card:not(.price-card--featured) .price-cta:hover {
+    background: var(--site-accent);
+    border-color: var(--site-accent);
+    color: #fff;
+  }
   .price-card--featured .price-cta {
     background: #fff;
     color: var(--site-fg);

@@ -72,8 +72,7 @@ export const TypewriterEffectSmooth = ({
       <motion.span
         className="inline-block max-w-full align-bottom"
         initial={{ clipPath: "inset(0 100% 0 0)" }}
-        whileInView={{ clipPath: "inset(0 0% 0 0)" }}
-        viewport={{ once: true }}
+        animate={{ clipPath: "inset(0 0% 0 0)" }}
         transition={{ duration: 2, ease: "linear", delay: 0.5 }}
       >
         {words.map((word, idx) => (
