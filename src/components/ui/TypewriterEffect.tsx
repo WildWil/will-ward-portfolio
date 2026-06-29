@@ -63,31 +63,51 @@ export const TypewriterEffectSmooth = ({
   className?: string;
   cursorClassName?: string;
 }) => {
+  const wordsArray = words.map((word) => ({ ...word, text: word.text.split("") }));
+  const [scope, animate] = useAnimate();
+
+  // Reveal character-by-character on mount (not whileInView): the headline is
+  // above the fold, so an IntersectionObserver would race hydration and could
+  // leave it unrevealed on reload. Each char takes layout as it appears, so the
+  // trailing cursor is pushed along — a real typewriter, not a static wipe.
+  useEffect(() => {
+    animate(
+      "span",
+      { display: "inline-block", opacity: 1, width: "fit-content" },
+      { duration: 0.3, delay: stagger(0.035), ease: "easeOut" }
+    );
+  }, []);
+
   return (
     <div className={cn("my-2 text-base sm:text-lg md:text-xl font-semibold", className)}>
-      {/* inline-block lets the text wrap to the container width on narrow
-          screens (instead of one overflowing line that gets clipped by the
-          hero's overflow:hidden), while clip-path keeps the left-to-right
-          reveal without any layout shift. */}
-      <motion.span
-        className="inline-block max-w-full align-bottom"
-        initial={{ clipPath: "inset(0 100% 0 0)" }}
-        animate={{ clipPath: "inset(0 0% 0 0)" }}
-        transition={{ duration: 2, ease: "linear", delay: 0.5 }}
-      >
-        {words.map((word, idx) => (
-          <span key={`word-${idx}`} className={cn("text-foreground", word.className)}>
-            {word.text}
-            {idx < words.length - 1 ? " " : ""}
-          </span>
+      {/* inline-block word boxes let the line wrap on narrow screens instead of
+          overflowing the hero's overflow:hidden. Chars start hidden and are
+          revealed in sequence, so the cursor trails the last visible letter. */}
+      <motion.div ref={scope} className="inline">
+        {wordsArray.map((word, idx) => (
+          <div key={`word-${idx}`} className="inline-block">
+            {word.text.map((char, index) => (
+              <motion.span
+                key={`char-${index}`}
+                className={cn("text-foreground opacity-0 hidden", word.className)}
+              >
+                {char}
+              </motion.span>
+            ))}
+            {idx < wordsArray.length - 1 ? <>&nbsp;</> : null}
+          </div>
         ))}
-      </motion.span>
+      </motion.div>
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+        // Gap is set inline (not a Tailwind ml-* class) because the dev JIT
+        // doesn't reliably generate newly-introduced margin utilities here,
+        // which silently left the margin at 0.
+        style={{ marginLeft: "3px", position: "relative", top: "1px" }}
         className={cn(
-          "inline-block align-bottom ml-1 rounded-sm w-[4px] h-6 sm:h-8 md:h-10 bg-primary",
+          "inline-block align-baseline rounded-sm w-[2px] h-3.5 sm:h-4 md:h-4 bg-primary",
           cursorClassName
         )}
       />
