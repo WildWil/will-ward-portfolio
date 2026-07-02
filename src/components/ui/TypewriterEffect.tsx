@@ -89,12 +89,11 @@ export const TypewriterEffectSmooth = ({
       el.style.opacity = "1";
     };
 
-    // Reduced-motion: skip the animation and show the headline immediately.
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
-      chars.forEach(reveal);
-      return;
-    }
-
+    // Note: intentionally NOT gated on prefers-reduced-motion. The site owner
+    // wants the headline to type on every device, including their own phone
+    // which has Reduce Motion enabled (matching the announcement banner, which
+    // also ignores that setting). To restore accessibility behaviour, early-
+    // return chars.forEach(reveal) when the reduce-motion media query matches.
     const MS_PER_CHAR = 38; // ~26 chars/sec
     let i = 0;
     let startT = 0;
