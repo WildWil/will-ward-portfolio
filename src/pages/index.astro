@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+// TEMPORARY out-of-office banner — remove this import and the <AnnouncementBanner /> below when back.
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Pricing from '../components/Pricing.astro';
@@ -12,6 +14,7 @@ import Footer from '../components/Footer.astro';
 ---
 <Base>
   <a href="#main-content" class="skip-link">Skip to content</a>
+  <AnnouncementBanner />
   <Header />
   <main id="main-content">
     <Hero />

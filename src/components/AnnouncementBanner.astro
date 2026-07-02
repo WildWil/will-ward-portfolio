@@ -1,0 +1,102 @@
+---
+// TEMPORARY out-of-office announcement (July 2–7 trip).
+// To take it down when you're back: delete the import + <AnnouncementBanner />
+// lines in src/pages/index.astro. Nothing else references this component.
+//
+// Static (non-scrolling) bar on purpose: a moving marquee tiled/flickered on
+// iOS WebKit, so this stays put — centered text that wraps on narrow screens.
+const phone = '+18439014691';
+---
+
+<!-- Pre-paint hide: if this visitor already dismissed the bar, mark <html> before
+     the element renders so it never flashes in. Paired with the global rule below. -->
+<script is:inline>
+  try {
+    if (localStorage.getItem('announce-dismissed-oo-jul-2') === '1') {
+      document.documentElement.classList.add('announce-dismissed');
+    }
+  } catch (e) {}
+</script>
+
+<aside class="announce" id="announce" aria-label="Announcement">
+  <p class="announce-msg">
+    I'll be out of town <strong>July 2–7</strong> and slower to respond than usual.
+    Expect a call back on the <strong>7th or 8th</strong> — please{' '}
+    <a href={`tel:${phone}`}>leave a voicemail</a>!
+  </p>
+  <button class="announce-close" id="announce-close" type="button" aria-label="Dismiss announcement">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  </button>
+</aside>
+
+<style is:global>
+  html.announce-dismissed #announce { display: none; }
+</style>
+
+<style>
+  .announce {
+    position: relative;
+    /* Pinned brand blue + white in BOTH themes. Using the theme tokens directly
+       flips the text to near-black on bright sky-blue in dark mode, which read
+       as dark text on a washed-out (grayish) bar. Fixed colours keep it a
+       high-contrast alert bar everywhere (white on #0369A1 ≈ 5.9:1, AA). */
+    background: #0369A1;
+    color: #FFFFFF;
+    font-family: var(--font-body);
+  }
+  .announce-msg {
+    /* Override the global `p { color: var(--site-secondary); max-width: 65ch }`
+       rule: without color:inherit the text renders site-gray (unreadable on the
+       blue bar), and max-width:65ch would stop it centering across a wide bar. */
+    color: inherit;
+    max-width: none;
+    /* Symmetric horizontal padding keeps the text optically centered across the
+       whole bar while leaving room for the absolutely-positioned close button. */
+    margin: 0;
+    padding: 0.5rem 2.75rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .announce-msg strong { font-weight: 700; }
+  .announce-msg a {
+    color: inherit;
+    font-weight: 700;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+  }
+  .announce-close {
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.8;
+    border-radius: var(--radius-sm);
+    transition: opacity 150ms, background 150ms;
+  }
+  .announce-close:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.18);
+  }
+</style>
+
+<script>
+  const bar = document.getElementById('announce');
+  document.getElementById('announce-close')?.addEventListener('click', () => {
+    bar?.remove();
+    try { localStorage.setItem('announce-dismissed-oo-jul-2', '1'); } catch (e) {}
+  });
+</script>
