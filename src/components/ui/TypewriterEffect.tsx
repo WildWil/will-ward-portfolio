@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, stagger, useAnimate, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const TypewriterEffect = ({
   words,
@@ -64,53 +64,94 @@ export const TypewriterEffectSmooth = ({
   cursorClassName?: string;
 }) => {
   const wordsArray = words.map((word) => ({ ...word, text: word.text.split("") }));
-  const [scope, animate] = useAnimate();
+  const scopeRef = useRef<HTMLDivElement>(null);
 
   // Reveal character-by-character on mount (not whileInView): the headline is
   // above the fold, so an IntersectionObserver would race hydration and could
-  // leave it unrevealed on reload. Each char takes layout as it appears, so the
-  // trailing cursor is pushed along — a real typewriter, not a static wipe.
+  // leave it unrevealed on reload. Each char flips from display:none to
+  // inline-block as it reveals, so it takes layout and pushes the trailing
+  // cursor along — a real typewriter, not a static wipe.
+  //
+  // Reveal is paced by elapsed time (one char every MS_PER_CHAR) rather than by
+  // framer's stagger. framer's duration:0 + stagger landed the reveals on uneven
+  // frame boundaries — some chars popping together, others a beat late — which
+  // read as choppy typing. Timing each reveal off the clock keeps every character
+  // an even step apart, and (unlike counting frames) runs at the SAME speed on
+  // 60Hz and 120Hz/ProMotion displays. Reveal is instant (no opacity fade): a
+  // fade promotes each transitioning span to its own GPU layer on mobile WebKit,
+  // smearing a white box behind the cursor.
   useEffect(() => {
-    animate(
-      "span",
-      { display: "inline-block", opacity: 1, width: "fit-content" },
-      { duration: 0.3, delay: stagger(0.035), ease: "easeOut" }
-    );
+    const root = scopeRef.current;
+    if (!root) return;
+    const chars = Array.from(root.querySelectorAll<HTMLElement>(".tw-char"));
+    const reveal = (el: HTMLElement) => {
+      el.style.display = "inline-block";
+      el.style.opacity = "1";
+    };
+
+    // Reduced-motion: skip the animation and show the headline immediately.
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      chars.forEach(reveal);
+      return;
+    }
+
+    const MS_PER_CHAR = 38; // ~26 chars/sec
+    let i = 0;
+    let startT = 0;
+    let raf = 0;
+    const tick = (now: number) => {
+      if (!startT) startT = now;
+      // How many chars *should* be visible by now — reveal up to that point.
+      const target = Math.min(chars.length, Math.floor((now - startT) / MS_PER_CHAR) + 1);
+      while (i < target) reveal(chars[i++]);
+      if (i < chars.length) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, []);
+
+  // The cursor lives inside the last word's box (rather than as a trailing
+  // sibling) so it stays glued to the final letter and can't orphan onto a line
+  // by itself when the headline wraps on narrow screens.
+  const cursor = (
+    <motion.span
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+      // Gap is set inline (not a Tailwind ml-* class) because the dev JIT
+      // doesn't reliably generate newly-introduced margin utilities here,
+      // which silently left the margin at 0.
+      style={{ marginLeft: "3px", position: "relative", top: "1px" }}
+      className={cn(
+        "inline-block align-baseline rounded-sm w-[2px] h-3.5 sm:h-4 md:h-4 bg-primary",
+        cursorClassName
+      )}
+    />
+  );
 
   return (
     <div className={cn("my-2 text-base sm:text-lg md:text-xl font-semibold", className)}>
       {/* inline-block word boxes let the line wrap on narrow screens instead of
           overflowing the hero's overflow:hidden. Chars start hidden and are
           revealed in sequence, so the cursor trails the last visible letter. */}
-      <motion.div ref={scope} className="inline">
-        {wordsArray.map((word, idx) => (
-          <div key={`word-${idx}`} className="inline-block">
-            {word.text.map((char, index) => (
-              <motion.span
-                key={`char-${index}`}
-                className={cn("text-foreground opacity-0 hidden", word.className)}
-              >
-                {char}
-              </motion.span>
-            ))}
-            {idx < wordsArray.length - 1 ? <>&nbsp;</> : null}
-          </div>
-        ))}
-      </motion.div>
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-        // Gap is set inline (not a Tailwind ml-* class) because the dev JIT
-        // doesn't reliably generate newly-introduced margin utilities here,
-        // which silently left the margin at 0.
-        style={{ marginLeft: "3px", position: "relative", top: "1px" }}
-        className={cn(
-          "inline-block align-baseline rounded-sm w-[2px] h-3.5 sm:h-4 md:h-4 bg-primary",
-          cursorClassName
-        )}
-      />
+      <div ref={scopeRef} className="inline">
+        {wordsArray.map((word, idx) => {
+          const isLast = idx === wordsArray.length - 1;
+          return (
+            <div key={`word-${idx}`} className="inline-block">
+              {word.text.map((char, index) => (
+                <span
+                  key={`char-${index}`}
+                  className={cn("tw-char text-foreground opacity-0 hidden", word.className)}
+                >
+                  {char}
+                </span>
+              ))}
+              {isLast ? cursor : <>&nbsp;</>}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
